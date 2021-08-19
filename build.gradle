@@ -5,7 +5,6 @@ plugins {
     id 'jacoco'
     // Linter and code quality check
     id("com.diffplug.spotless") version "5.12.5"
-    id("io.gitlab.arturbosch.detekt") version "1.17.0"
 
 }
 
@@ -15,6 +14,7 @@ repositories {
 }
 
 dependencies {
+    implementation 'io.quarkus:quarkus-config-yaml'
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation 'io.quarkus:quarkus-arc'
     implementation 'io.quarkus:quarkus-resteasy'
@@ -22,7 +22,7 @@ dependencies {
     testImplementation 'io.rest-assured:rest-assured'
 }
 
-group 'org.acme'
+group 'com.splio'
 version '1.0.0-SNAPSHOT'
 
 java {
@@ -48,5 +48,22 @@ jacocoTestReport {
         xml.required = true
         csv.required = false
         html.outputLocation = layout.buildDirectory.dir('reports/jacoco/test/html')
+    }
+}
+spotless {
+    java {
+        importOrder() // standard import order
+        importOrder('java', 'javax', 'com.acme', '') // or importOrderFile
+        // You probably want an empty string at the end - all of the
+        // imports you didn't specify explicitly will go there.
+
+        removeUnusedImports()
+
+        googleJavaFormat() // has its own section below
+        eclipse()          // has its own section below
+        prettier()         // has its own section below
+        clangFormat()      // has its own section below
+
+        licenseHeader '/* (C) $YEAR */' // or licenseHeaderFile
     }
 }

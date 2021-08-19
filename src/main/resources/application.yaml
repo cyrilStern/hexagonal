@@ -1,0 +1,7 @@
+quarkus:
+  log:
+    category:
+      "io.quarkus.category":
+        level: INFO
+  http:
+    port: 8080
