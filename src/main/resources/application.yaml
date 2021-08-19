@@ -5,3 +5,9 @@ quarkus:
         level: INFO
   http:
     port: 8080
+  smallrye-health:
+    liveness-path: /health-check
+  micrometer:
+    export:
+      prometheus:
+        path: /metrics
