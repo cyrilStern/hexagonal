@@ -1,6 +1,12 @@
 plugins {
     id 'java'
     id 'io.quarkus'
+
+    id 'jacoco'
+    // Linter and code quality check
+    id("com.diffplug.spotless") version "5.12.5"
+    id("io.gitlab.arturbosch.detekt") version "1.17.0"
+
 }
 
 repositories {
@@ -31,4 +37,16 @@ compileJava {
 
 compileTestJava {
     options.encoding = 'UTF-8'
+}
+
+test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+    reports {
+        xml.required = true
+        csv.required = false
+        html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+    }
 }
