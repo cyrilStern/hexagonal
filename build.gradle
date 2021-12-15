@@ -4,7 +4,7 @@ plugins {
 
     id 'jacoco'
     // Linter and code quality check
-    id("com.diffplug.spotless") version "5.12.5"
+    id("com.diffplug.spotless") version "6.0.4"
 
 }
 
