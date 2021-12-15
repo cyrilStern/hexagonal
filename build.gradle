@@ -29,8 +29,8 @@ group 'com.splio'
 version '1.0.0-SNAPSHOT'
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
 compileJava {
@@ -56,17 +56,14 @@ jacocoTestReport {
 spotless {
     java {
         importOrder() // standard import order
-        importOrder('java', 'javax', 'com.acme', '') // or importOrderFile
+        // importOrder('java', 'javax', 'com.acme', '') // or importOrderFile
         // You probably want an empty string at the end - all of the
         // imports you didn't specify explicitly will go there.
 
         removeUnusedImports()
 
-        googleJavaFormat() // has its own section below
-        eclipse()          // has its own section below
-        prettier()         // has its own section below
-        clangFormat()      // has its own section below
+        googleJavaFormat()
 
-        licenseHeader '/* (C) $YEAR */' // or licenseHeaderFile
+        licenseHeader '/** Copyright (c) \\$today.year Splio.com All rights reserved. */' // or licenseHeaderFile
     }
 }

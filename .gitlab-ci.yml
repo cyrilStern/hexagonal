@@ -7,7 +7,7 @@
 
 Unit_test:
   stage: test
-  image: gradle:jdk16-hotspot
+  image: gradle:jdk17
   tags:
     - docker
   script:
