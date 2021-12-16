@@ -1,0 +1,30 @@
+quarkus.tls.trust-all=true
+quarkus.http.non-application-root-path=/
+
+# Configure SSL (for HTTPS + disable HTTP), only production useless for tests & local dev
+quarkus.http.ssl-port=8044
+quarkus.http.ssl.certificate.files=${SSL_CERTIFICATE_FILE_PATH:server.pem}
+quarkus.http.ssl.certificate.key-files=${SSL_CERTIFICATE_KEY_PATH:server.key}
+quarkus.http.ssl.insecure-requests=disabled
+quarkus.smallrye-health.liveness-path=/health-check
+quarkus.micrometer.export.prometheus.path=/metrics
+
+
+# Configure GELF Logging
+quarkus.log.handler.gelf.enabled=true
+quarkus.log.handler.gelf.include-log-message-parameters=false
+quarkus.log.handler.gelf.include-full-mdc=true
+quarkus.log.handler.gelf.host=${GELF_LOG_HOST:logstash.infra.aws.internal}
+quarkus.log.handler.gelf.port=${GELF_LOG_PORT:12201}
+quarkus.log.handler.gelf.level=${GELF_LOG_LEVEL:INFO}
+quarkus.log.handler.gelf.additional-field.app.value=CHANGE_APP
+quarkus.log.handler.gelf.additional-field.app.type=String
+quarkus.log.handler.gelf.additional-field.tags.value=customer-platform
+quarkus.log.handler.gelf.additional-field.tags.type=String
+quarkus.log.handler.gelf.additional-field.env.value=${ENVIRONMENT:dev}
+quarkus.log.handler.gelf.additional-field.env.type=String
+quarkus.log.handler.gelf.additional-field.zone.value=${ZONE:default-zone}
+quarkus.log.handler.gelf.additional-field.zone.type=String
+quarkus.log.handler.gelf.additional-field.version.value=${VERSION:default-version}
+quarkus.log.handler.gelf.additional-field.version.type=String
+quarkus.log.console.enable=false
