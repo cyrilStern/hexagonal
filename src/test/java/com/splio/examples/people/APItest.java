@@ -1,6 +1,6 @@
 package com.splio.examples.people;
 
-import com.splio.examples.people.MySQL.Repository;
+import com.splio.examples.people.mysql.Repository;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
 import io.smallrye.mutiny.Uni;
@@ -11,7 +11,6 @@ import org.mockito.Mockito;
 import java.time.LocalDate;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.is;
 
 @QuarkusTest
 public class APItest {

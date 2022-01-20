@@ -1,4 +1,4 @@
-package com.splio.examples.people.Metrics;
+package com.splio.examples.people.metrics;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;

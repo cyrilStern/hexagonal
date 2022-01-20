@@ -1,6 +1,6 @@
-package com.splio.examples.people.API;
+package com.splio.examples.people.api;
 
-import com.splio.examples.people.MySQL.Repository;
+import com.splio.examples.people.mysql.Repository;
 import com.splio.examples.people.People;
 import io.smallrye.mutiny.Uni;
 

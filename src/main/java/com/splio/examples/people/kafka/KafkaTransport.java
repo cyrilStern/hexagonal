@@ -1,8 +1,7 @@
-package com.splio.examples.people.Kafka;
+package com.splio.examples.people.kafka;
 
-import com.splio.examples.people.Metrics.PrometheusMetrics;
-import com.splio.examples.people.MySQL.Repository;
-import com.splio.examples.people.People;
+import com.splio.examples.people.metrics.PrometheusMetrics;
+import com.splio.examples.people.mysql.Repository;
 import com.splio.people.PeopleAvro;
 import io.smallrye.mutiny.Uni;
 import org.eclipse.microprofile.reactive.messaging.Incoming;

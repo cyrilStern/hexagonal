@@ -1,4 +1,4 @@
-package com.splio.examples.people.mySQL;
+package com.splio.examples.people.mysql;
 
 import com.splio.examples.people.People;
 import io.smallrye.mutiny.Uni;

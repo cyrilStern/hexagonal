@@ -1,6 +1,6 @@
 package com.splio.examples.people;
 
-import com.splio.examples.people.MySQL.Repository;
+import com.splio.examples.people.mysql.Repository;
 import com.splio.people.PeopleAvro;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
@@ -9,7 +9,6 @@ import io.smallrye.mutiny.Uni;
 import io.smallrye.reactive.messaging.providers.connectors.InMemoryConnector;
 import io.smallrye.reactive.messaging.providers.connectors.InMemorySink;
 import io.smallrye.reactive.messaging.providers.connectors.InMemorySource;
-import org.eclipse.microprofile.reactive.messaging.Message;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
