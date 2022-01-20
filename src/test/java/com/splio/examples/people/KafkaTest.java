@@ -18,7 +18,6 @@ import org.mockito.Mockito;
 import javax.enterprise.inject.Any;
 import javax.inject.Inject;
 import java.time.LocalDate;
-import java.util.List;
 
 import static org.awaitility.Awaitility.await;
 

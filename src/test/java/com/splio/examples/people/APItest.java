@@ -34,8 +34,7 @@ public class APItest {
         .when()
             .get("/people/1")
         .then()
-            .statusCode(200)
-            .body(is("People[Name=test, ID=1, Birthday=2022-01-19]"));
+            .statusCode(200);
     }
 
 }
