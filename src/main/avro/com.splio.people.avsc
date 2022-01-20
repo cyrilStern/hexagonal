@@ -1,0 +1,38 @@
+{
+  "type": "record",
+  "name": "PeopleAvro",
+  "namespace": "com.splio.people",
+  "fields": [
+    {
+      "name": "name",
+      "type": [
+        "null",
+        {
+          "type": "string"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "id",
+      "type": [
+        "null",
+        {
+          "type": "long"
+        }
+      ],
+      "default": null
+    },
+    {
+      "name": "birthday",
+      "type": [
+        "null",
+        {
+          "type": "int",
+          "logicalType": "date"
+        }
+      ],
+      "default": null
+    }
+  ]
+}

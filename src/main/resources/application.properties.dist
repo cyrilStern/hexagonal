@@ -1,16 +1,24 @@
-quarkus.tls.trust-all=true
-quarkus.http.non-application-root-path=/
+################################ Configure Quarkus
+quarkus.application.name=CHANGE_ME
+################################
 
-# Configure SSL (for HTTPS + disable HTTP), only production useless for tests & local dev
-quarkus.http.ssl-port=8044
-quarkus.http.ssl.certificate.files=${SSL_CERTIFICATE_FILE_PATH:server.pem}
-quarkus.http.ssl.certificate.key-files=${SSL_CERTIFICATE_KEY_PATH:server.key}
-quarkus.http.ssl.insecure-requests=disabled
+################################ Configure HEALTH-CHECK (needed by K8s)
 quarkus.smallrye-health.liveness-path=/health-check
+################################
+
+################################ Configure Metrics Path (to be scrapped by Prometheus)
 quarkus.micrometer.export.prometheus.path=/metrics
+################################
 
+################################# Configure SSL (for HTTPS + disable HTTP), only production useless for tests & local dev
+%prod.quarkus.http.ssl-port=8044
+%prod.quarkus.http.ssl.certificate.files=${SSL_CERTIFICATE_FILE_PATH:server.pem}
+%prod.quarkus.http.ssl.certificate.key-files=${SSL_CERTIFICATE_KEY_PATH:server.key}
+%prod.quarkus.http.ssl.insecure-requests=disabled
+quarkus.tls.trust-all=true
+#################################
 
-# Configure GELF Logging
+################################# Configure GELF Logging
 quarkus.log.handler.gelf.enabled=true
 quarkus.log.handler.gelf.include-log-message-parameters=false
 quarkus.log.handler.gelf.include-full-mdc=true
@@ -27,4 +35,55 @@ quarkus.log.handler.gelf.additional-field.zone.value=${ZONE:default-zone}
 quarkus.log.handler.gelf.additional-field.zone.type=String
 quarkus.log.handler.gelf.additional-field.version.value=${VERSION:default-version}
 quarkus.log.handler.gelf.additional-field.version.type=String
-quarkus.log.console.enable=false
+# I'd recommend using GELF only for production, since in dev mode you'll want to read the logs in the console !
+%dev.quarkus.log.handler.geld.enabled=true
+# Disable console logging in production to avoid having your logs twice in ELK (customer-platform-* & kubernetes-* indexes)
+%prod.quarkus.log.console.enable=false
+#################################
+
+################################# Configure Kafka connector
+kafka.bootstrap.servers=${KAFKA_BROKERS:default_brokers}
+mp.messaging.connector.smallrye-kafka.security.protocol=SASL_SSL
+# kafka.ssl.endpoint.identification.algorithm need to be explicitly set to empty
+mp.messaging.connector.smallrye-kafka.ssl.endpoint.identification.algorithm=
+mp.messaging.connector.smallrye-kafka.sasl.mechanism=SCRAM-SHA-512
+mp.messaging.connector.smallrye-kafka.sasl.jaas.config=org.apache.kafka.common.security.scram.ScramLoginModule required \
+   username="${KAFKA_AUTH_USER:default_user}" \
+   password="${KAFKA_AUTH_PASSWORD:default_password}";
+#################################
+
+################################# Configure schema registry
+kafka.schema.registry.url=${KAFKA_REGISTRY:}
+kafka.schema.registry.basic.auth.credentials.source=USER_INFO
+kafka.schema.registry.basic.auth.user.info=${KAFKA_REGISTRY_USER_INFO:user:password}
+#################################
+
+################################# Configure smallrye channels (Kafka consumers & producers)
+# Incoming are CONSUMERS
+mp.messaging.incoming.id-channel.connector=smallrye-kafka
+mp.messaging.incoming.id-channel.value.deserializer=io.confluent.kafka.serializers.KafkaAvroDeserializer
+mp.messaging.incoming.id-channel.value.serializer=io.confluent.kafka.serializers.KafkaAvroDeserializer
+mp.messaging.incoming.id-channel.topic=${EXAMPLE_KAFKA_TOPIC:default_kafka_topic}
+
+# Outgoing are PRODUCERS
+mp.messaging.outgoing.people-channel.connector=smallrye-kafka
+mp.messaging.outgoing.people-channel.value.serializer=io.confluent.kafka.serializers.KafkaAvroSerializer
+mp.messaging.outgoing.people-channel.value.deserializer=io.confluent.kafka.serializers.KafkaAvroSerializer
+mp.messaging.outgoing.people-channel.topic=${EXAMPLE_KAFKA_TOPIC:default_kafka_topic}
+#################################
+
+############################### Configure database (MySQL)
+quarkus.datasource.db-kind=mysql
+quarkus.datasource.username=${MYSQL_USER:default_user}
+quarkus.datasource.password=${MYSQL_PASSWORD:default_password}
+quarkus.datasource.reactive.url=mysql://${MYSQL_HOST:mysql-main.dev.aws.internal}:${MYSQL_PORT:3306}
+quarkus.datasource.reactive.max-size=15
+###############################
+
+############################### Configure Sentry
+quarkus.log.sentry=${SENTRY_ENABLED:false}
+quarkus.log.sentry.dsn=${SENTRY_DSN:}
+quarkus.log.sentry.in-app-packages=com.splio
+quarkus.log.sentry.release=${VERSION:develop}
+quarkus.log.sentry.environment=${ENVIRONMENT:dev}
+###############################

@@ -11,23 +11,32 @@ plugins {
 repositories {
     mavenCentral()
     mavenLocal()
+    maven {
+        url 'https://packages.confluent.io/maven/'
+    }
 }
 
 dependencies {
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
+    implementation('io.confluent:kafka-avro-serializer:6.1.1')
+    implementation 'io.quarkus:quarkus-micrometer-registry-prometheus'
+    implementation 'io.quarkus:quarkus-logging-sentry'
     implementation 'io.quarkus:quarkus-arc'
-    implementation 'io.quarkus:quarkus-smallrye-health'
     implementation 'io.quarkus:quarkus-logging-gelf'
-    implementation 'io.quarkus:quarkus-smallrye-metrics'
-    implementation 'io.quarkus:quarkus-resteasy'
+    implementation 'io.quarkus:quarkus-resteasy-reactive'
+    implementation 'io.quarkus:quarkus-reactive-mysql-client'
+    implementation 'io.quarkus:quarkus-smallrye-reactive-messaging'
+    implementation 'io.quarkus:quarkus-smallrye-reactive-messaging-kafka'
+    implementation 'io.quarkus:quarkus-smallrye-fault-tolerance'
+    implementation 'io.quarkus:quarkus-smallrye-health'
+    implementation 'io.quarkus:quarkus-avro'
 
     //TEST
     testImplementation 'io.quarkus:quarkus-junit5'
     testImplementation 'io.rest-assured:rest-assured'
     testImplementation 'io.quarkus:quarkus-junit5-mockito'
+    testImplementation 'io.smallrye.reactive:smallrye-reactive-messaging-in-memory'
     testImplementation 'org.awaitility:awaitility:4.1.1'
-
-
 }
 
 
