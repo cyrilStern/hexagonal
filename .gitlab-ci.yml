@@ -11,6 +11,7 @@ Unit_test:
   tags:
     - docker
   script:
+    - mv src/main/resources/application.properties.dist src/main/resources/applicarion.properties
     - gradle test --no-daemon
   artifacts:
     when: always
