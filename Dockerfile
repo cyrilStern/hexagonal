@@ -24,4 +24,4 @@ COPY --chown=1001 --from=build /app/build/quarkus-app/quarkus/ /app/quarkus/
 USER 1001
 EXPOSE 8044
 
-ENTRYPOINT [ "java", "-jar", "quarkus-run.jar" ]
+ENTRYPOINT [ "java", "-jar", "build/quarkus-app/quarkus/quarkus-run.jar" ]
