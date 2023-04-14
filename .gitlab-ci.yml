@@ -7,12 +7,10 @@
 
 Unit_test:
   stage: test
-  # Gradle JDK 17, version published in early 2022, before a tag update made the test fail inside Gitlab runner
-  name: gradle@sha256:058e381853dd5c4d2f629445bc1c4de5f1978eac956aa57372e91463befa5820
+  image: 8.0.1-jdk19
   tags:
-    - dind
+    - kubernetes
   script:
-    - mv src/main/resources/application.properties.dist src/main/resources/application.properties
     - gradle test --no-daemon
   artifacts:
     when: always
@@ -23,23 +21,22 @@ Unit_test:
 
 coverage:
   stage: test
-  tags:
-    - dind
   image: registry.gitlab.com/haynes/jacoco2cobertura:1.0.7
   script:
     # convert report from jacoco to cobertura, using relative project path
     # Change /src/main/java to /src/main/kotlin if you are using kotlin
-    - python /opt/cover2cover.py build/jacoco-report/jacoco.xml $CI_PROJECT_DIR/src/main/java/ > build/cobertura.xml
-    - cat build/jacoco-report/index.html | grep -o 'Total[^%]*%'
-  coverage: '/Total.*?([0-9]{1,3})%/'
-  needs: [ "unit_test" ]
-  dependencies:
-    - unit_test
+    - python /opt/cover2cover.py build/reports/jacoco/test/jacocoTestReport.xml $CI_PROJECT_DIR/src/main/java/ > build/cobertura.xml
+    - cat build/reports/jacoco/test/html/index.html | grep -o 'Total[^%]*%'
+  needs: [ "Unit_test" ]
   artifacts:
     expire_in: 1 week
     when: always
     reports:
-      junit: report.xml
       coverage_report:
         coverage_format: cobertura
-        path: coverage.xml
+        path: build/cobertura.xml
+  tags:
+    - docker
+  coverage: '/Total.*?([0-9]{1,3})%/'
+  dependencies:
+    - unit_test
