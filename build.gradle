@@ -1,99 +1,37 @@
 plugins {
     id 'java'
-    id 'io.quarkus'
-
-    id 'jacoco'
-    // Linter and code quality check
-    id "com.diffplug.spotless" version "6.0.4"
-
+}
+allprojects {
+    group 'com.splio'
+    version 'test'
 }
 
-repositories {
-    mavenCentral()
-    mavenLocal()
-    maven {
-        url 'https://packages.confluent.io/maven/'
+subprojects {
+    apply plugin: 'java'
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        gradlePluginPortal()
     }
-}
 
-dependencies {
-    implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
-    implementation('io.confluent:kafka-avro-serializer:6.1.1')
-    implementation 'io.quarkus:quarkus-micrometer-registry-prometheus'
-    implementation 'io.quarkus:quarkus-logging-sentry'
-    implementation 'io.quarkus:quarkus-arc'
-    implementation 'io.quarkus:quarkus-logging-gelf'
-    implementation 'io.quarkus:quarkus-resteasy-reactive'
-    implementation 'io.quarkus:quarkus-reactive-mysql-client'
-    implementation 'io.quarkus:quarkus-smallrye-reactive-messaging'
-    implementation 'io.quarkus:quarkus-smallrye-reactive-messaging-kafka'
-    implementation 'io.quarkus:quarkus-smallrye-fault-tolerance'
-    implementation 'io.quarkus:quarkus-smallrye-health'
-    implementation 'io.quarkus:quarkus-confluent-registry-avro'
-    implementation 'io.quarkus:quarkus-opentelemetry-exporter-otlp'
-    implementation 'io.quarkus:quarkus-rest-client-reactive-jackson'
-    implementation 'io.quarkus:quarkus-cache'
-
-
-
-    // LOMBOK //
-    compileOnly 'org.projectlombok:lombok:1.18.24'
-    annotationProcessor 'org.projectlombok:lombok:1.18.24'
-
-    //TEST
-    testImplementation 'io.quarkus:quarkus-junit5'
-    testImplementation 'io.rest-assured:rest-assured'
-    testImplementation 'io.quarkus:quarkus-junit5-mockito'
-    testImplementation 'io.smallrye.reactive:smallrye-reactive-messaging-in-memory'
-    testImplementation 'org.awaitility:awaitility:4.2.0'
-    testImplementation 'org.testcontainers:mysql:1.17.3'
-    testImplementation 'com.github.tomakehurst:wiremock-jre8:2.33.2'
-    testImplementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.26'
-
-}
-
-
-group 'com.splio'
-version '1.0.0-SNAPSHOT'
-
-java {
-    sourceCompatibility = JavaVersion.VERSION_19
-    targetCompatibility = JavaVersion.VERSION_19
-}
-
-compileJava {
-    options.encoding = 'UTF-8'
-    options.compilerArgs << '-parameters'
-    options.compilerArgs.addAll(['--enable-preview'])}
-
-compileTestJava {
-    options.encoding = 'UTF-8'
-    options.compilerArgs << '-parameters'
-    options.compilerArgs.addAll(['--enable-preview'])}
-
-test {
-    finalizedBy jacocoTestReport // report is always generated after tests run
-}
-jacocoTestReport {
-    dependsOn test // tests are required to run before generating the report
-    reports {
-        xml.required = true
-        csv.required = false
-        html.outputLocation = layout.buildDirectory.dir('reports/jacoco/test/html')
+    compileJava {
+        options.encoding = 'UTF-8'
+        options.compilerArgs << '-parameters'
     }
-}
 
-spotless {
+    compileTestJava {
+        options.encoding = 'UTF-8'
+    }
+
     java {
-        importOrder() // standard import order
-        // importOrder('java', 'javax', 'com.acme', '') // or importOrderFile
-        // You probably want an empty string at the end - all of the
-        // imports you didn't specify explicitly will go there.
-
-        removeUnusedImports()
-
-        googleJavaFormat()
-
-        licenseHeader '/** Copyright (c) \\$today.year Splio.com All rights reserved. */' // or licenseHeaderFile
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
+    tasks.withType(JavaCompile).each {
+        it.options.compilerArgs.add('--enable-preview')
+    }
+    test {
+        jvmArgs(['--enable-preview'])
+    }
+
 }

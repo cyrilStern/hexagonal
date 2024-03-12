@@ -4,9 +4,9 @@ WORKDIR /app
 COPY --chown=quarkus:quarkus build.gradle settings.gradle gradle.properties /app/
 COPY --chown=quarkus:quarkus gradlew /app/gradlew
 COPY --chown=quarkus:quarkus gradle /app/gradle
-COPY --chown=quarkus:quarkus src/main/resources/application.properties.dist /app/src/main/resources/application.properties
-COPY --chown=quarkus:quarkus src/main/java /app/src/main/java
-COPY --chown=quarkus:quarkus src/main/avro /app/src/main/avro
+#COPY --chown=quarkus:quarkus infrastructure/src/main/resources/application.properties.dist /app/src/main/resources/application.properties
+COPY --chown=quarkus:quarkus domain /app/domain
+COPY --chown=quarkus:quarkus infrastructure /app/infrastructure
 COPY cacerts /app
 
 USER root
