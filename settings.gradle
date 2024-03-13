@@ -6,10 +6,11 @@ pluginManagement {
     }
 
     plugins {
-        id "${quarkusPluginId}" version "${quarkusPluginVersion}"
+        id "${quarkusPlatformGroupId}" version "${quarkusPlatformVersion}"
     }
 }
+
 rootProject.name='quarkus-template'
-include 'infrastructure'
 include 'domain'
+include 'quarkus-infrastructure'
 

@@ -1,19 +1,55 @@
-plugins {
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "io.quarkus:gradle-application-plugin:$quarkusPlatformVersion"
+    }
+}
+plugins{
     id 'java'
+    id("com.github.spotbugs") version "6.0.8"
+    id 'com.diffplug.spotless' version "6.25.0" //version ok with string template
+    id 'jacoco'
 }
-allprojects {
-    group 'com.splio'
+repositories {
+    mavenCentral()
+}
+subprojects.findAll{
+    group "com.splio.$it.name"
     version 'test'
+    if(it.name == 'infrastructure'){
+        print(it.name)
+    }
 }
-
+spotless {
+    java {
+        target project.fileTree(project.rootDir) {
+            include '**/*.java'
+            exclude '**/build/**'
+        }
+        importOrder 'java', 'jakarta', 'org', 'com', 'com.splio'   // A sequence of package names
+        removeUnusedImports()
+        toggleOffOn()
+        googleJavaFormat()
+        trimTrailingWhitespace()
+        endWithNewline()
+        licenseHeader '/** Copyright (c) 2023 Splio.com All rights reserved. */'
+    }
+}
 subprojects {
     apply plugin: 'java'
+    apply plugin:  'com.github.spotbugs'
+
     repositories {
         mavenLocal()
         mavenCentral()
-        gradlePluginPortal()
     }
-
+    dependencies {
+        spotbugsPlugins 'com.h3xstream.findsecbugs:findsecbugs-plugin:1.12.0'
+    }
     compileJava {
         options.encoding = 'UTF-8'
         options.compilerArgs << '-parameters'
@@ -34,4 +70,11 @@ subprojects {
         jvmArgs(['--enable-preview'])
     }
 
+    tasks.spotbugsMain {
+        reports.create("html") {
+            required = true
+            outputLocation = file("$buildDir/reports/spotbugs.html")
+            setStylesheet("fancy-hist.xsl")
+        }
+    }
 }
