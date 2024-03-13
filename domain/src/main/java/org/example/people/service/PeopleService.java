@@ -1,4 +1,4 @@
-/** Copyright (c) 2023 Splio.com All rights reserved. */
+/** Copyright (c) 2024 Splio.com All rights reserved. */
 package org.example.people.service;
 
 import org.example.people.entity.People;

@@ -1,4 +1,4 @@
-/** Copyright (c) 2023 Splio.com All rights reserved. */
+/** Copyright (c) 2024 Splio.com All rights reserved. */
 package org.example.adapteur.registry;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -7,7 +7,7 @@ import org.example.people.entity.People;
 import org.example.people.port.repository.PeopleRegistryPort;
 
 @ApplicationScoped
-public class PeopleRegistryPortAdapter implements PeopleRegistryPort {
+public class PeopleRegistryAdapter implements PeopleRegistryPort {
   @Override
   public People retrieve(int id) {
     return new People(12, "Alfounet", List.of());
