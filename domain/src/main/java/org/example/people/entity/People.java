@@ -8,6 +8,6 @@ public record People(Integer age, String name, List<Address> address) {
   public People {
     Objects.requireNonNull(age);
     Objects.requireNonNull(name);
-    address = List.copyOf(address);
+    address = List.copyOf(address); // this is for transform to immutable
   }
 }

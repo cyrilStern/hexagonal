@@ -3,8 +3,11 @@ plugins {
     id 'io.quarkus'
 }
 
-
 dependencies {
+    //implementation 'io.quarkiverse.jooq:quarkus-jooq:2.0.1'
+    implementation 'io.quarkus:quarkus-jdbc-mysql'
+    implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.3'
+    implementation 'io.quarkus:quarkus-reactive-mysql-client'
     implementation project(':domain')
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation 'io.quarkus:quarkus-smallrye-health'
@@ -12,9 +15,13 @@ dependencies {
     implementation 'io.quarkus:quarkus-arc'
     implementation 'io.quarkus:quarkus-logging-gelf'
     implementation 'io.quarkus:quarkus-resteasy-reactive-jackson'
+    implementation 'com.zaxxer:HikariCP:5.1.0'
 
-    testImplementation platform('org.junit:junit-bom:5.9.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter'
-    testImplementation "org.mockito:mockito-core:3.+"
+    testImplementation("io.quarkus:quarkus-junit5")
+    testImplementation("io.quarkus.junit5:junit5-virtual-threads")
+    testImplementation("io.rest-assured:rest-assured")
+    testImplementation 'org.openjdk.jmh:jmh-core:1.37'
+    testImplementation 'org.openjdk.jmh:jmh-generator-annprocess:1.37'
+    testImplementation 'org.awaitility:awaitility:4.2.0'
 
 }
