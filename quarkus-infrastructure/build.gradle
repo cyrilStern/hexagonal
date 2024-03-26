@@ -4,10 +4,9 @@ plugins {
 }
 
 dependencies {
-    //implementation 'io.quarkiverse.jooq:quarkus-jooq:2.0.1'
-    implementation 'io.quarkus:quarkus-jdbc-mysql'
-    implementation 'org.mariadb.jdbc:mariadb-java-client:3.3.3'
-    implementation 'io.quarkus:quarkus-reactive-mysql-client'
+    // Hibernate ORM specific dependencies
+    implementation("io.quarkus:quarkus-hibernate-orm-panache")
+    implementation("io.quarkus:quarkus-jdbc-postgresql")
     implementation project(':domain')
     implementation enforcedPlatform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}")
     implementation 'io.quarkus:quarkus-smallrye-health'
@@ -15,8 +14,8 @@ dependencies {
     implementation 'io.quarkus:quarkus-arc'
     implementation 'io.quarkus:quarkus-logging-gelf'
     implementation 'io.quarkus:quarkus-resteasy-reactive-jackson'
-    implementation 'com.zaxxer:HikariCP:5.1.0'
-
+    implementation("io.quarkus:quarkus-smallrye-reactive-messaging-kafka")
+    annotationProcessor("io.quarkus:quarkus-panache-common")
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.quarkus.junit5:junit5-virtual-threads")
     testImplementation("io.rest-assured:rest-assured")
