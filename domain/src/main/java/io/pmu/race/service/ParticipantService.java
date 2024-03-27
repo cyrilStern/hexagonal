@@ -1,6 +1,7 @@
 package io.pmu.race.service;
 
 import io.pmu.race.dto.ParticipantDTO;
+import io.pmu.race.exception.ParticapantExeption;
 
 import java.util.List;
 import java.util.stream.IntStream;

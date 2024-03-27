@@ -5,6 +5,8 @@ package io.pmu.bootstrap;
 
 import io.pmu.adapteur.registry.RaceRegistryAdapter;
 import io.pmu.race.dto.RaceDTO;
+import io.pmu.race.port.connector.MessageConnector;
+import io.pmu.race.port.repository.RaceRegistryPort;
 import io.smallrye.reactive.messaging.MutinyEmitter;
 import jakarta.enterprise.inject.Default;
 import io.pmu.race.service.RaceService;
@@ -15,9 +17,8 @@ import org.eclipse.microprofile.reactive.messaging.Channel;
 public class Configuration {
 
     @Default
-    @Produces
-    public RaceService raceService(RaceRegistryAdapter raceRegistryAdapter, MessageAdapter messageAdapter) {
-        return new RaceService(raceRegistryAdapter, messageAdapter);
+    public RaceService raceService(RaceRegistryPort registryPort, MessageConnector<RaceDTO> messageAdapter) {
+        return new RaceService(registryPort, messageAdapter);
     }
 
 }

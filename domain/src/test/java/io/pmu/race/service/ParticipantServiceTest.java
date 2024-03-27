@@ -4,6 +4,7 @@
 package io.pmu.race.service;
 
 import io.pmu.race.dto.ParticipantDTO;
+import io.pmu.race.exception.ParticapantExeption;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

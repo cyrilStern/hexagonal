@@ -15,7 +15,13 @@ dependencies {
     implementation 'io.quarkus:quarkus-logging-gelf'
     implementation 'io.quarkus:quarkus-resteasy-reactive-jackson'
     implementation("io.quarkus:quarkus-smallrye-reactive-messaging-kafka")
+    implementation("io.quarkus:quarkus-smallrye-openapi")
+
+
+
     annotationProcessor("io.quarkus:quarkus-panache-common")
+
+
     testImplementation("io.quarkus:quarkus-junit5")
     testImplementation("io.quarkus.junit5:junit5-virtual-threads")
     testImplementation("io.rest-assured:rest-assured")

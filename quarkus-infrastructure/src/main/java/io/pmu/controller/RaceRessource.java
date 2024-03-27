@@ -7,7 +7,7 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import io.pmu.race.service.RaceService;
 @RunOnVirtualThread
-@Path("/v1/race")
+@Path("/api/v1/race")
 public class RaceRessource implements io.pmu.race.port.controller.RaceController {
   private final RaceService raceService;
 

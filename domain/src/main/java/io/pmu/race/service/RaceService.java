@@ -3,6 +3,7 @@ package io.pmu.race.service;
 
 import io.pmu.race.dto.RaceDTO;
 import io.pmu.race.entity.Race;
+import io.pmu.race.exception.DuplicationException;
 import io.pmu.race.port.connector.MessageConnector;
 import io.pmu.race.port.repository.RaceRegistryPort;
 

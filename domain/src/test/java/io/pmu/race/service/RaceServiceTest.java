@@ -4,6 +4,7 @@ import io.pmu.race.dto.ParticipantDTO;
 import io.pmu.race.dto.RaceDTO;
 import io.pmu.race.entity.Participant;
 import io.pmu.race.entity.Race;
+import io.pmu.race.exception.DuplicationException;
 import io.pmu.race.exception.ParticipantNumberException;
 import io.pmu.race.port.connector.MessageConnector;
 import io.pmu.race.port.repository.RaceRegistryPort;
